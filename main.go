@@ -59,7 +59,7 @@ func generateEntityFile(gen *protogen.Plugin, file *protogen.File) {
 		filename := "./generate/entity/" + m.GoIdent.GoName + ".java"
 		g := gen.NewGeneratedFile(filename, file.GoImportPath)
 		// 输出 package packageName
-		g.P("package ", file.GoPackageName)
+		g.P("package ", file.Desc.Package(), ".entity;")
 		g.P() // 换行
 		// 输出 type m.GoIdent struct {
 		g.P("import java.io.Serializable;")
@@ -97,7 +97,7 @@ func generateDaoFile(gen *protogen.Plugin, file *protogen.File) {
 		filename := "./generate/dao/" + service.GoName + "Dao.java"
 		g := gen.NewGeneratedFile(filename, file.GoImportPath)
 		// 输出 package packageName
-		g.P("package ", file.GoPackageName, ";")
+		g.P("package ", file.Desc.Package(), ".dao;")
 		g.P() // 换
 		g.P("import java.util.List;\n")
 		g.P("import java.util.stream.Collectors;\n")
@@ -159,7 +159,7 @@ func generateServiceFile(gen *protogen.Plugin, file *protogen.File) {
 		filename := "./generate/service/" + service.GoName + "Service.java"
 		g := gen.NewGeneratedFile(filename, file.GoImportPath)
 		// 输出 package packageName
-		g.P("package ", file.GoPackageName, ";")
+		g.P("package ", file.Desc.Package(), ".service;")
 		g.P() // 换行
 		g.P("import java.util.List;\n")
 		g.P("import java.util.stream.Collectors;\n")
@@ -198,7 +198,7 @@ func generateServiceImplFile(gen *protogen.Plugin, file *protogen.File) {
 		filename := "./generate/service/impl/" + service.GoName + "ServiceImpl.java"
 		g := gen.NewGeneratedFile(filename, file.GoImportPath)
 		// 输出 package packageName
-		g.P("package ", file.GoPackageName, ";")
+		g.P("package ", file.Desc.Package(), ".service.impl;")
 		g.P() // 换行
 		g.P("import java.util.List;\n")
 		g.P("import java.util.stream.Collectors;\n")
@@ -237,7 +237,7 @@ func generateControllerFile(gen *protogen.Plugin, file *protogen.File) {
 		filename := "./generate/controller/" + service.GoName + "Controller.java"
 		g := gen.NewGeneratedFile(filename, file.GoImportPath)
 		// 输出 package packageName
-		g.P("package ", file.GoPackageName, ";")
+		g.P("package ", file.Desc.Package(), ".controller;")
 		g.P() // 换行
 		g.P("import io.swagger.annotations.Api;")
 		g.P("import io.swagger.annotations.ApiOperation;\n")
@@ -279,7 +279,7 @@ func generateVoFile(gen *protogen.Plugin, file *protogen.File) {
 		filename := "./generate/vo/" + m.GoIdent.GoName + "Vo.java"
 		g := gen.NewGeneratedFile(filename, file.GoImportPath)
 		// 输出 package packageName
-		g.P("package ", file.GoPackageName)
+		g.P("package ", file.Desc.Package(), ".vo;")
 		g.P() // 换行
 
 		// 输出 type m.GoIdent struct {
