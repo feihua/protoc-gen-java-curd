@@ -8,13 +8,19 @@
 
 Protoc-gen-java-curd 是一款java 模板代码生成工具，基于protobuf 插件开发的
 
-# 1.安装
+# 1.二种安装方式
+
+## 1.1源码安装
 
 下载代码 git clone https://github.com/feihua/protoc-gen-java-curd.git
 
 cd protoc-gen-java-curd目录
 
 go install 编译安装
+
+## 1.2 直接下二进制文件
+
+https://github.com/feihua/protoc-gen-java-curd/releases/download/v0.1.0/protoc-gen-java-curd.rar
 
 # 2.使用
 
