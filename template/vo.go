@@ -19,26 +19,22 @@ func GenerateVoFile(gen *protogen.Plugin, file *protogen.File) {
 		g.P("import lombok.Builder;")
 		g.P("import lombok.Data;")
 		g.P("import lombok.NoArgsConstructor;\n")
+		serviceComment := m.Comments.Leading.String()
+		serviceComment = serviceComment[3 : len(serviceComment)-2]
+		g.P("@ApiModel(\"", serviceComment, "\")")
 		g.P("@Data")
 		g.P("@Builder")
 		g.P("@NoArgsConstructor")
 		g.P("@AllArgsConstructor")
-		g.P("public class ", m.GoIdent, " implements Serializable {\n")
+		g.P("public class ", m.GoIdent, "Vo implements Serializable {\n")
 		for _, field := range m.Fields {
 			//leadingComment := field.Comments.Leading.String()
 			trailingComment := field.Comments.Trailing.String()
 			trailingComment = trailingComment[3 : len(trailingComment)-1]
-			g.P("	@ApiModelProperty(\"", trailingComment, "\")")
-			g.P("	private ", field.Desc.Kind(), " ", field.Desc.JSONName(), ";")
-			// 输出 行首注释
-			//g.P(leadingComment)
-			// 输出 行内容
-			//g.P(line)
+			g.P("\t@ApiModelProperty(\"", trailingComment, "\")")
+			g.P("\tprivate ", ProtoTypeToJavaType[field.Desc.Kind().String()], " ", field.Desc.JSONName(), ";\n")
 		}
-		// 输出 }
 		g.P("}")
 	}
 
-	//file.Services[0].Methods[0].
-	//g.P() // 换行
 }

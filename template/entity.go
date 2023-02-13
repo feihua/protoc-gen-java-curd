@@ -6,7 +6,6 @@ func GenerateEntityFile(gen *protogen.Plugin, file *protogen.File) {
 	for _, m := range file.Messages {
 		filename := "./generate/entity/" + m.GoIdent.GoName + ".java"
 		g := gen.NewGeneratedFile(filename, file.GoImportPath)
-		// 输出 package packageName
 		g.P("package ", file.Desc.Package(), ".entity;")
 		g.P() // 换行
 		// 输出 type m.GoIdent struct {
@@ -22,20 +21,25 @@ func GenerateEntityFile(gen *protogen.Plugin, file *protogen.File) {
 		g.P("@AllArgsConstructor")
 		g.P("public class ", m.GoIdent, " implements Serializable {\n")
 		for _, field := range m.Fields {
-			//leadingComment := field.Comments.Leading.String()
 			trailingComment := field.Comments.Trailing.String()
 			trailingComment = trailingComment[0 : len(trailingComment)-1]
-			g.P("	", trailingComment)
-			g.P("	private ", field.Desc.Kind(), " ", field.Desc.JSONName(), ";")
-			// 输出 行首注释
-			//g.P(leadingComment)
-			// 输出 行内容
-			//g.P(line)
+			g.P("\t", trailingComment)
+			g.P("\tprivate ", ProtoTypeToJavaType[field.Desc.Kind().String()], " ", field.Desc.JSONName(), ";")
 		}
-		// 输出 }
 		g.P("}")
 	}
 
-	//file.Services[0].Methods[0].
-	//g.P() // 换行
+}
+
+var ProtoTypeToJavaType = map[string]string{
+	"double": "double",
+	"float":  "float",
+	"int64":  "long",
+	"int32":  "int",
+	"uint64": "long",
+	"uint32": "int",
+	"sint64": "long",
+	"sint32": "int",
+	"bool":   "boolean",
+	"string": "String",
 }
