@@ -6,9 +6,12 @@ import (
 )
 
 func GenerateControllerFile(gen *protogen.Plugin, file *protogen.File) {
+	//循环解析service
 	for _, service := range file.Services {
 		filename := "./generate/controller/" + service.GoName + "Controller.java"
 		g := gen.NewGeneratedFile(filename, file.GoImportPath)
+
+		//文件头导入模板代码
 		g.P("package ", file.Desc.Package(), ".controller;\n")
 		g.P("import io.swagger.annotations.Api;")
 		g.P("import io.swagger.annotations.ApiOperation;\n")
@@ -29,6 +32,8 @@ func GenerateControllerFile(gen *protogen.Plugin, file *protogen.File) {
 			g.P("import ", file.Desc.Package(), ".vo.", param, "Vo;")
 		}
 		g.P()
+
+		//获取service注释
 		serviceComment := service.Comments.Leading.String()
 		serviceComment = serviceComment[3 : len(serviceComment)-2]
 		g.P("@Api(tags = \"", serviceComment, "\")")
@@ -39,6 +44,7 @@ func GenerateControllerFile(gen *protogen.Plugin, file *protogen.File) {
 		g.P("\tprivate ", service.GoName, "Service ", FirstLower(service.GoName), "Service;\n")
 		for _, method := range service.Methods {
 
+			//获取method注释
 			methodComment := method.Comments.Leading.String()
 			methodComment = methodComment[3 : len(methodComment)-2]
 			g.P("\t@ApiOperation(\"", methodComment, "\")")

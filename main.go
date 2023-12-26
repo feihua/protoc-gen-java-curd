@@ -7,10 +7,13 @@ import (
 
 func main() {
 	protogen.Options{}.Run(func(gen *protogen.Plugin) error {
+		// 这个循环遍历所有要生成的proto文件
 		for _, f := range gen.Files {
+			//如果该文件不需要生成,则跳过
 			if !f.Generate {
 				continue
 			}
+			//如果需要生成，就把文件的相关信息传递给生成器
 			generateFile(gen, f)
 		}
 		return nil

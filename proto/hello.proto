@@ -34,4 +34,11 @@ message HelloRequest {
 message HelloReply {
   string message = 1;// 名称
   int64 age = 2;// 年龄
+  TestReply data = 3;// 返回的数据
+}
+
+//内部数据
+message TestReply {
+  string message = 1;// 名称
+  int64 age = 2;// 年龄
 }
