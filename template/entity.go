@@ -2,7 +2,7 @@ package template
 
 import "google.golang.org/protobuf/compiler/protogen"
 
-func GenerateEntityFile(gen *protogen.Plugin, file *protogen.File) {
+func GenerateEntityFile(gen *protogen.Plugin, file *protogen.File, t string) {
 	for _, m := range file.Messages {
 		filename := "./generate/entity/" + m.GoIdent.GoName + ".java"
 		g := gen.NewGeneratedFile(filename, file.GoImportPath)
@@ -19,6 +19,13 @@ func GenerateEntityFile(gen *protogen.Plugin, file *protogen.File) {
 		g.P("@Builder")
 		g.P("@NoArgsConstructor")
 		g.P("@AllArgsConstructor")
+		serviceComment := m.Comments.Leading.String()
+		serviceComment = serviceComment[3 : len(serviceComment)-2]
+		g.P("/**")
+		g.P(" * 描述: ", serviceComment)
+		g.P(" * 作者：", "demo")
+		g.P(" * 日期：", t)
+		g.P(" */")
 		g.P("public class ", m.GoIdent, " implements Serializable {\n")
 		for _, field := range m.Fields {
 			trailingComment := field.Comments.Trailing.String()

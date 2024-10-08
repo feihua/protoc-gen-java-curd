@@ -1,11 +1,12 @@
 package template
 
 import (
+	"github/feihua/protoc-gen-java-curd/util"
 	"google.golang.org/protobuf/compiler/protogen"
 	"strings"
 )
 
-func GenerateXmlFile(gen *protogen.Plugin, file *protogen.File) {
+func GenerateXmlFile(gen *protogen.Plugin, file *protogen.File, t string) {
 
 	for _, service := range file.Services {
 		filename := "./generate/mapper/" + service.GoName + "Mapper.xml"
@@ -19,7 +20,7 @@ func GenerateXmlFile(gen *protogen.Plugin, file *protogen.File) {
 			serviceComment := method.Comments.Leading.String()
 			serviceComment = serviceComment[3 : len(serviceComment)-2]
 			g.P("\t<!-- ", serviceComment, " -->")
-			methodName := FirstLower(method.GoName)
+			methodName := util.FirstLower(method.GoName)
 			inputParam := method.Input.GoIdent.GoName
 			outParam := method.Output.GoIdent.GoName
 

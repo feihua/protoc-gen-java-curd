@@ -3,6 +3,7 @@ package main
 import (
 	"github/feihua/protoc-gen-java-curd/template"
 	"google.golang.org/protobuf/compiler/protogen"
+	"time"
 )
 
 func main() {
@@ -21,11 +22,16 @@ func main() {
 }
 
 func generateFile(gen *protogen.Plugin, f *protogen.File) {
-	template.GenerateEntityFile(gen, f)
-	template.GenerateDaoFile(gen, f)
-	template.GenerateXmlFile(gen, f)
-	template.GenerateServiceFile(gen, f)
-	template.GenerateServiceImplFile(gen, f)
-	template.GenerateControllerFile(gen, f)
-	template.GenerateVoFile(gen, f)
+	t := time.Now().Format("2006-01-02 15:04:05")
+	template.GenerateEntityFile(gen, f, t)
+	template.GenerateDaoFile(gen, f, t)
+	template.GenerateXmlFile(gen, f, t)
+	template.GenerateServiceFile(gen, f, t)
+	template.GenerateBizFile(gen, f, t)
+	template.GenerateBizImplFile(gen, f, t)
+	template.GenerateServiceImplFile(gen, f, t)
+	template.GenerateControllerFile(gen, f, t)
+	template.GenerateControllerV3File(gen, f, t)
+	template.GenerateVoFile(gen, f, t)
+	template.GenerateVoV3File(gen, f, t)
 }

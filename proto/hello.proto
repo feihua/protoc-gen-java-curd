@@ -6,32 +6,32 @@ option go_package = "./protoc_struct";
 // The greeting service definition.
 service Greeter {
   // Sends a greeting
-  rpc SayHello (HelloRequest) returns (HelloReply) {}
+  rpc SayHello (HelloReqVo) returns (HelloRespVo) {}
   // Sends a greeting
-  rpc DeleteHello (HelloRequest) returns (HelloReply) {}
+  rpc DeleteHello (HelloReqVo) returns (HelloRespVo) {}
   // Sends a greeting
-  rpc SaveHello (HelloRequest) returns (HelloReply) {}
+  rpc SaveHello (HelloReqVo) returns (HelloRespVo) {}
   // Sends a greeting
-  rpc UpdateHello (HelloRequest) returns (HelloReply) {}
+  rpc UpdateHello (HelloReqVo) returns (HelloRespVo) {}
   // Sends another greeting
-  rpc SayHelloAgain (HelloRequest) returns (HelloReply) {}
+  rpc SayHelloAgain (HelloReqVo) returns (HelloRespVo) {}
 }
 
 // The greeting service definition test.
 service GreeterTest {
   // Sends a greeting
-  rpc SayHello (HelloRequest) returns (HelloReply) {}
+  rpc SayHello (HelloReqVo) returns (HelloRespVo) {}
   // Sends another greeting
-  rpc SayHelloAgain (HelloRequest) returns (HelloReply) {}
+  rpc SayHelloAgain (HelloReqVo) returns (HelloRespVo) {}
 }
 
 // The request message containing the user's name.
-message HelloRequest {
+message HelloReqVo {
   string name = 1;// 名称
 }
 
 // The response message containing the greetings
-message HelloReply {
+message HelloRespVo {
   string message = 1;// 名称
   int64 age = 2;// 年龄
   TestReply data = 3;// 返回的数据

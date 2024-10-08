@@ -5,10 +5,10 @@ import (
 	"google.golang.org/protobuf/compiler/protogen"
 )
 
-func GenerateControllerFile(gen *protogen.Plugin, file *protogen.File, t string) {
+func GenerateControllerV3File(gen *protogen.Plugin, file *protogen.File, t string) {
 	//循环解析service
 	for _, service := range file.Services {
-		filename := "./generate/controller/v2/" + service.GoName + "Controller.java"
+		filename := "./generate/controller/v3/" + service.GoName + "Controller.java"
 		g := gen.NewGeneratedFile(filename, file.GoImportPath)
 
 		//文件头导入模板代码
@@ -52,14 +52,6 @@ func GenerateControllerFile(gen *protogen.Plugin, file *protogen.File, t string)
 			//获取method注释
 			methodComment := method.Comments.Leading.String()
 			methodComment = methodComment[3 : len(methodComment)-2]
-			//   /**
-			//    * 添加支付宝支付配置
-			//    *
-			//    * @param record 请求参数
-			//    * @return Result<Integer>
-			//    * @author 刘飞华
-			//    * @date: 2024-09-23 09:54:03
-			//    */
 			g.P("\t/**")
 			g.P("\t * ", methodComment)
 			g.P("\t * ")
@@ -70,7 +62,7 @@ func GenerateControllerFile(gen *protogen.Plugin, file *protogen.File, t string)
 			g.P("\t */")
 			g.P("\t@ApiOperation(\"", methodComment, "\")")
 			g.P("\t@PostMapping(\"/", util.FirstLower(method.GoName), "\")")
-			g.P("\tpublic ", method.Output.GoIdent, "Vo ", util.FirstLower(method.GoName), "(@RequestBody @Valid ", method.Input.GoIdent, util.FirstLower(method.Input.GoIdent.GoName), ")", " {")
+			g.P("\tpublic ", method.Output.GoIdent, "Vo ", util.FirstLower(method.GoName), "(@RequestBody @Valid ", method.Input.GoIdent, "Vo ", util.FirstLower(method.Input.GoIdent.GoName), ")", " {")
 			g.P("\t\treturn ", util.FirstLower(service.GoName), "Service.", util.FirstLower(method.GoName), "(", util.FirstLower(method.Input.GoIdent.GoName), ");")
 			g.P("\t}\n")
 		}

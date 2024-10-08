@@ -5,11 +5,11 @@ import (
 	"strings"
 )
 
-func GenerateVoFile(gen *protogen.Plugin, file *protogen.File, t string) {
+func GenerateVoV3File(gen *protogen.Plugin, file *protogen.File, t string) {
 	for _, m := range file.Messages {
-		filename := "./generate/vo/v2/req/" + m.GoIdent.GoName + ".java"
+		filename := "./generate/vo/v3/req/" + m.GoIdent.GoName + ".java"
 		if strings.Contains(m.GoIdent.GoName, "Resp") {
-			filename = "./generate/vo/v2/resp/" + m.GoIdent.GoName + ".java"
+			filename = "./generate/vo/v3/resp/" + m.GoIdent.GoName + ".java"
 		}
 
 		g := gen.NewGeneratedFile(filename, file.GoImportPath)
