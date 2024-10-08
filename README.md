@@ -8,19 +8,12 @@
 
 Protoc-gen-java-curd 是一款java 模板代码生成工具，基于protobuf 插件开发的
 
-# 1.二种安装方式
+# 1.安装
 
-## 1.1源码安装
 
-下载代码 git clone https://github.com/feihua/protoc-gen-java-curd.git
-
-cd protoc-gen-java-curd目录
-
-go install 编译安装
-
-## 1.2 直接下二进制文件
-
-https://github.com/feihua/protoc-gen-java-curd/releases/download/v0.1.0/protoc-gen-java-curd.rar
+```shell
+go install github.com/feihua/protoc-gen-java-curd@latest
+```
 
 # 2.使用
 
@@ -35,32 +28,39 @@ option go_package = "./protoc_struct";
 // The greeting service definition.
 service Greeter {
   // Sends a greeting
-  rpc SayHello (HelloRequest) returns (HelloReply) {}
+  rpc SayHello (HelloReqVo) returns (HelloRespVo) {}
   // Sends a greeting
-  rpc DeleteHello (HelloRequest) returns (HelloReply) {}
+  rpc DeleteHello (HelloReqVo) returns (HelloRespVo) {}
   // Sends a greeting
-  rpc SaveHello (HelloRequest) returns (HelloReply) {}
+  rpc SaveHello (HelloReqVo) returns (HelloRespVo) {}
   // Sends a greeting
-  rpc UpdateHello (HelloRequest) returns (HelloReply) {}
+  rpc UpdateHello (HelloReqVo) returns (HelloRespVo) {}
   // Sends another greeting
-  rpc SayHelloAgain (HelloRequest) returns (HelloReply) {}
+  rpc SayHelloAgain (HelloReqVo) returns (HelloRespVo) {}
 }
 
 // The greeting service definition test.
 service GreeterTest {
   // Sends a greeting
-  rpc SayHello (HelloRequest) returns (HelloReply) {}
+  rpc SayHello (HelloReqVo) returns (HelloRespVo) {}
   // Sends another greeting
-  rpc SayHelloAgain (HelloRequest) returns (HelloReply) {}
+  rpc SayHelloAgain (HelloReqVo) returns (HelloRespVo) {}
 }
 
 // The request message containing the user's name.
-message HelloRequest {
+message HelloReqVo {
   string name = 1;// 名称
 }
 
 // The response message containing the greetings
-message HelloReply {
+message HelloRespVo {
+  string message = 1;// 名称
+  int64 age = 2;// 年龄
+  TestReply data = 3;// 返回的数据
+}
+
+//内部数据
+message TestReply {
   string message = 1;// 名称
   int64 age = 2;// 年龄
 }
