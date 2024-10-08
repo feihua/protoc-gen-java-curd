@@ -36,7 +36,7 @@ func GenerateDaoFile(gen *protogen.Plugin, file *protogen.File, t string) {
 			g.P("\t/**")
 			g.P("\t * ", methodComment)
 			g.P("\t * ")
-			g.P("\t * @param record ", util.FirstLower(method.Input.GoIdent.GoName), "请求参数")
+			g.P("\t * @param ", util.FirstLower(method.Input.GoIdent.GoName), " 请求参数")
 			g.P("\t * @return ", method.Output.GoIdent)
 			g.P("\t * @author ", "demo")
 			g.P("\t * @date ", t)

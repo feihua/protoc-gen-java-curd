@@ -38,7 +38,8 @@ func GenerateVoFile(gen *protogen.Plugin, file *protogen.File, t string) {
 		g.P("@Builder")
 		g.P("@NoArgsConstructor")
 		g.P("@AllArgsConstructor")
-		g.P("public class ", m.GoIdent, "Vo implements Serializable {\n")
+		g.P("public class ", m.GoIdent, " implements Serializable {\n")
+		g.P("\tprivate static final long serialVersionUID = 1L;\n")
 		for _, field := range m.Fields {
 			//leadingComment := field.Comments.Leading.String()
 			trailingComment := field.Comments.Trailing.String()

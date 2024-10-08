@@ -18,7 +18,7 @@ func GenerateBizFile(gen *protogen.Plugin, file *protogen.File, t string) {
 			methodParams[method.Output.GoIdent.GoName] = "1"
 		}
 		for param := range methodParams {
-			g.P("import ", file.Desc.Package(), ".vo.", param, "Vo;")
+			g.P("import ", file.Desc.Package(), ".vo.", param, ";")
 		}
 		g.P()
 		serviceComment := service.Comments.Leading.String()
@@ -35,12 +35,12 @@ func GenerateBizFile(gen *protogen.Plugin, file *protogen.File, t string) {
 			g.P("\t/**")
 			g.P("\t * ", methodComment)
 			g.P("\t * ")
-			g.P("\t * @param record ", util.FirstLower(method.Input.GoIdent.GoName), "请求参数")
+			g.P("\t * @param ", util.FirstLower(method.Input.GoIdent.GoName), " 请求参数")
 			g.P("\t * @return ", method.Output.GoIdent)
 			g.P("\t * @author ", "demo")
 			g.P("\t * @date ", t)
 			g.P("\t */")
-			g.P("\t", method.Output.GoIdent, "Vo ", util.FirstLower(method.GoName), "(", method.Input.GoIdent, "Vo ", util.FirstLower(method.Input.GoIdent.GoName), ");\n")
+			g.P("\t", method.Output.GoIdent, util.FirstLower(method.GoName), "(", method.Input.GoIdent, " ", util.FirstLower(method.Input.GoIdent.GoName), ");\n")
 		}
 		g.P("}")
 
@@ -71,7 +71,7 @@ func GenerateBizImplFile(gen *protogen.Plugin, file *protogen.File, t string) {
 			g.P("import ", file.Desc.Package(), ".entity.", param, ";")
 		}
 		for param := range methodParams {
-			g.P("import ", file.Desc.Package(), ".vo.", param, "Vo;")
+			g.P("import ", file.Desc.Package(), ".vo.", param, ";")
 		}
 		g.P()
 		serviceComment := service.Comments.Leading.String()
@@ -92,19 +92,19 @@ func GenerateBizImplFile(gen *protogen.Plugin, file *protogen.File, t string) {
 			g.P("\t/**")
 			g.P("\t * ", methodComment)
 			g.P("\t * ")
-			g.P("\t * @param record ", util.FirstLower(method.Input.GoIdent.GoName), "请求参数")
+			g.P("\t * @param ", util.FirstLower(method.Input.GoIdent.GoName), " 请求参数")
 			g.P("\t * @return ", method.Output.GoIdent)
 			g.P("\t * @author ", "demo")
 			g.P("\t * @date ", t)
 			g.P("\t */")
 			g.P("\t@Override")
-			g.P("\tpublic ", method.Output.GoIdent, "Vo ", util.FirstLower(method.GoName), "(", method.Input.GoIdent, "Vo ", util.FirstLower(method.Input.GoIdent.GoName), ")", " {")
+			g.P("\tpublic ", method.Output.GoIdent, util.FirstLower(method.GoName), "(", method.Input.GoIdent, " ", util.FirstLower(method.Input.GoIdent.GoName), ")", " {")
 			//g.P("		return ", FirstLower(service.GoName), "Dao.", FirstLower(method.GoName), "(", FirstLower(method.Input.GoIdent.GoName), ");")
 			//HelloReply helloReply = greeterTestDao.sayHelloAgain(HelloRequest.builder().build());
 			//
 			g.P("\t\t", method.Output.GoIdent, " ", util.FirstLower(method.Output.GoIdent.GoName), " = ", util.FirstLower(service.GoName), "Dao.", util.FirstLower(method.GoName), "(", method.Input.GoIdent.GoName, ".builder().build());")
 			//return HelloReplyVo.builder().build();
-			g.P("\t\treturn ", method.Output.GoIdent, "Vo.builder().build();")
+			g.P("\t\treturn ", method.Output.GoIdent, "builder().build();")
 			g.P("	}\n")
 		}
 		g.P("}")

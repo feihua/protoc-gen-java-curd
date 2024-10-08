@@ -29,7 +29,7 @@ func GenerateControllerFile(gen *protogen.Plugin, file *protogen.File, t string)
 			methodParams[method.Output.GoIdent.GoName] = "1"
 		}
 		for param := range methodParams {
-			g.P("import ", file.Desc.Package(), ".vo.", param, "Vo;")
+			g.P("import ", file.Desc.Package(), ".vo.", param, ";")
 		}
 		g.P()
 
@@ -63,14 +63,14 @@ func GenerateControllerFile(gen *protogen.Plugin, file *protogen.File, t string)
 			g.P("\t/**")
 			g.P("\t * ", methodComment)
 			g.P("\t * ")
-			g.P("\t * @param record ", util.FirstLower(method.Input.GoIdent.GoName), "请求参数")
+			g.P("\t * @param ", util.FirstLower(method.Input.GoIdent.GoName), " 请求参数")
 			g.P("\t * @return ", method.Output.GoIdent)
 			g.P("\t * @author ", "demo")
 			g.P("\t * @date ", t)
 			g.P("\t */")
 			g.P("\t@ApiOperation(\"", methodComment, "\")")
 			g.P("\t@PostMapping(\"/", util.FirstLower(method.GoName), "\")")
-			g.P("\tpublic ", method.Output.GoIdent, "Vo ", util.FirstLower(method.GoName), "(@RequestBody @Valid ", method.Input.GoIdent, util.FirstLower(method.Input.GoIdent.GoName), ")", " {")
+			g.P("\tpublic ", method.Output.GoIdent, " ", util.FirstLower(method.GoName), "(@RequestBody @Valid ", method.Input.GoIdent, " ", util.FirstLower(method.Input.GoIdent.GoName), ")", " {")
 			g.P("\t\treturn ", util.FirstLower(service.GoName), "Service.", util.FirstLower(method.GoName), "(", util.FirstLower(method.Input.GoIdent.GoName), ");")
 			g.P("\t}\n")
 		}

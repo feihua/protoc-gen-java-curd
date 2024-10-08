@@ -13,8 +13,8 @@ func GenerateControllerV3File(gen *protogen.Plugin, file *protogen.File, t strin
 
 		//文件头导入模板代码
 		g.P("package ", file.Desc.Package(), ".controller;\n")
-		g.P("import io.swagger.annotations.Api;")
-		g.P("import io.swagger.annotations.ApiOperation;\n")
+		g.P("import io.swagger.v3.oas.annotations.Operation;")
+		g.P("import io.swagger.v3.oas.annotations.tags.Tag;\n")
 		g.P("import java.util.List;\n")
 		g.P("import javax.validation.Valid;\n")
 		g.P("import org.springframework.beans.factory.annotation.Autowired;")
@@ -29,7 +29,7 @@ func GenerateControllerV3File(gen *protogen.Plugin, file *protogen.File, t strin
 			methodParams[method.Output.GoIdent.GoName] = "1"
 		}
 		for param := range methodParams {
-			g.P("import ", file.Desc.Package(), ".vo.", param, "Vo;")
+			g.P("import ", file.Desc.Package(), ".vo.", param, ";")
 		}
 		g.P()
 
@@ -41,7 +41,7 @@ func GenerateControllerV3File(gen *protogen.Plugin, file *protogen.File, t strin
 		g.P(" * 作者：", "demo")
 		g.P(" * 日期：", t)
 		g.P(" */")
-		g.P("@Api(tags = \"", serviceComment, "\")")
+		g.P("@Tag(name = \"", serviceComment, "\")")
 		g.P("@RestController")
 		g.P("@RequestMapping(\"/", util.FirstLower(service.GoName), "\")")
 		g.P("public class ", service.GoName, "Controller {\n")
@@ -55,14 +55,14 @@ func GenerateControllerV3File(gen *protogen.Plugin, file *protogen.File, t strin
 			g.P("\t/**")
 			g.P("\t * ", methodComment)
 			g.P("\t * ")
-			g.P("\t * @param record ", util.FirstLower(method.Input.GoIdent.GoName), "请求参数")
+			g.P("\t * @param ", util.FirstLower(method.Input.GoIdent.GoName), " 请求参数")
 			g.P("\t * @return ", method.Output.GoIdent)
 			g.P("\t * @author ", "demo")
 			g.P("\t * @date ", t)
 			g.P("\t */")
-			g.P("\t@ApiOperation(\"", methodComment, "\")")
+			g.P("\t@Operation(summary = \"", methodComment, "\")")
 			g.P("\t@PostMapping(\"/", util.FirstLower(method.GoName), "\")")
-			g.P("\tpublic ", method.Output.GoIdent, "Vo ", util.FirstLower(method.GoName), "(@RequestBody @Valid ", method.Input.GoIdent, "Vo ", util.FirstLower(method.Input.GoIdent.GoName), ")", " {")
+			g.P("\tpublic ", method.Output.GoIdent, " ", util.FirstLower(method.GoName), "(@RequestBody @Valid ", method.Input.GoIdent, " ", util.FirstLower(method.Input.GoIdent.GoName), ")", " {")
 			g.P("\t\treturn ", util.FirstLower(service.GoName), "Service.", util.FirstLower(method.GoName), "(", util.FirstLower(method.Input.GoIdent.GoName), ");")
 			g.P("\t}\n")
 		}
